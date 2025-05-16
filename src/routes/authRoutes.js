@@ -5,12 +5,13 @@ const User = require('../models/User');
 
 // Registro de usuarios
 router.post('/register', async (req, res) => {
+  console.log('Datos recibidos en req.body para /register:', req.body);
   try {
     const {
       nombres,
       apellidos,
       telefono,
-      correoElectronico,
+      email,
       estadoRegion,
       residencia,
       habitacion,
@@ -20,7 +21,7 @@ router.post('/register', async (req, res) => {
     } = req.body;
 
     // Validar que el usuario o correo no existan
-    const userExists = await User.findOne({ $or: [{ correoElectronico }, { username }] });
+    const userExists = await User.findOne({ $or: [{ email }, { username }] });
     if (userExists) {
       return res.status(400).json({ message: 'El usuario o correo electrónico ya existe' });
     }
@@ -29,7 +30,7 @@ router.post('/register', async (req, res) => {
       nombres,
       apellidos,
       telefono,
-      correoElectronico,
+      email,
       estadoRegion,
       residencia,
       habitacion,
@@ -51,7 +52,7 @@ router.post('/login', async (req, res) => {
     const { emailOrUsername, contrasena } = req.body;
 
     // Buscar usuario por correo o username
-    const user = await User.findOne({ $or: [{ correoElectronico: emailOrUsername }, { username: emailOrUsername }] });
+    const user = await User.findOne({ $or: [{ email: emailOrUsername }, { username: emailOrUsername }] });
 
     if (user && (await user.matchPassword(contrasena))) {
       res.json({ message: 'Login exitoso', userId: user._id });

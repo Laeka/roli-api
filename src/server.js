@@ -1,4 +1,5 @@
 // Configuracion Express
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -10,7 +11,6 @@ const profileRoutes = require('./routes/profile');
 const userRoutes = require('./routes/user');
 const rewardRoutes = require('./routes/reward');
 
-require('dotenv').config();
 require('./config/db');
 
 // Middlewares
@@ -23,7 +23,7 @@ app.use('/api/home', homeRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/dailyLog', dailyLogRoutes);
 app.use('/api/profile', profileRoutes);
-app.use('/uploads', express.static('uploads'));
+// app.use('/uploads', express.static('uploads'));
 app.use('/api/users', userRoutes);
 app.use('/api/rewards', rewardRoutes);
 
