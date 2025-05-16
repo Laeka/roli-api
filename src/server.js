@@ -26,6 +26,9 @@ app.use('/api/profile', profileRoutes);
 // app.use('/uploads', express.static('uploads'));
 app.use('/api/users', userRoutes);
 app.use('/api/rewards', rewardRoutes);
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok', message: 'Servicio Roli-API está activo' });
+});
 
 const PORT = process.env.PORT || 5001;
 
